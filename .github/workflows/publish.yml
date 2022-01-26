@@ -20,9 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Test
+      - name: Parse release version
         run: |
-          SANS_VERSION=${GITHUB_REF_NAME#v*}
-          MAJOR=$(echo $SANS_VERSION | cut -d. -f1)
-          MINOR=$(echo $SANS_VERSION | cut -d. -f2)
-          PATCH=$(echo $SANS_VERSION | cut -d. -f3)
+          VERSION=${GITHUB_REF_NAME#v*}
+          echo "MAJOR=$(echo $VERSION | cut -d. -f1)" >> $GITHUB_ENV
+          echo "MINOR=$(echo $VERSION | cut -d. -f2)" >> $GITHUB_ENV
+          echo "PATCH=$(echo $VERSION | cut -d. -f3)" >> $GITHUB_ENV
           echo $MAJOR $MINOR $PATCH
+      - name: Test release version
+        run: |
+          echo {{ env.$MAJOR }} . {{ env.$MINOR }} . {{ env.$PATCH}}
