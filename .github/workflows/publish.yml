@@ -21,4 +21,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Test
         run: |
-          echo REF: $GITHUB_REF_NAME
+          SANS_VERSION=${GITHUB_REF_NAME#v*}
+          MAJOR=$(echo $SANS_VERSION | cut -d. -f1)
+          MINOR=$(echo $SANS_VERSION | cut -d. -f2)
+          PATCH=$(echo $SANS_VERSION | cut -d. -f3)
+          echo $MAJOR $MINOR $PATCH
