@@ -19,7 +19,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Test
 
       - name: Parse release version
         run: |
